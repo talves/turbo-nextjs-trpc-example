@@ -5,6 +5,17 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "web#build": {
+      "dependsOn": [
+        "^build",
+        "$VERCEL_URL"
+      ],
+      "outputs": [".next/**"]
+    },
+    "export": {
+      "dependsOn": ["build"],
+      "outputs": ["out/**"]
+    },
     "lint": {
       "outputs": []
     },

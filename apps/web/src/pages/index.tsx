@@ -1,11 +1,17 @@
 import Head from "next/head";
 import { Button } from "ui";
+import { trpc } from '../utils/trpc';
 
 export default function Home() {
+  const hello = trpc.useQuery(['hello', { text: 'client' } as any]);
+  if (!hello.data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
-        <title>Web - Turborepo Example</title>
+        <title>Web - {hello.data.greeting}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -14,7 +20,8 @@ export default function Home() {
           Web <br className="hidden lg:block" />
           <span className="inline-block bg-gradient-to-r from-brandred to-brandblue bg-clip-text text-transparent">
             Turborepo Example
-          </span>{" "}
+          </span>
+          <span className="inline-block">{hello.data.greeting}</span>
         </h1>
         <div className="mx-auto mt-5 max-w-xl sm:flex sm:justify-center md:mt-8">
           <Button />
